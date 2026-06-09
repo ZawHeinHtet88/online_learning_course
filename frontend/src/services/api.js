@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const API_URL = __DEV__
   ? 'http://192.168.100.135:5000/api'
-  : 'https://learning-platform-api.onrender.com/api';
+  : 'https://learning-platform-api-224f.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
