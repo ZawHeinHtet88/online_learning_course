@@ -1,17 +1,15 @@
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
-const API_URL = __DEV__
-  ? 'http://192.168.100.135:5000/api'
-  : 'https://learning-platform-api-224f.onrender.com/api';
+const API_URL = "https://learning-platform-api-224f.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { "Content-Type": "application/json" },
 });
 
 api.interceptors.request.use(async (config) => {
-  const token = await SecureStore.getItemAsync('token');
+  const token = await SecureStore.getItemAsync("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,41 +20,42 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      await SecureStore.deleteItemAsync('token');
+      await SecureStore.deleteItemAsync("token");
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const authAPI = {
-  register: (data) => api.post('/auth/register', data),
-  login: (data) => api.post('/auth/login', data),
-  getMe: () => api.get('/auth/me'),
-  updateProfile: (data) => api.put('/auth/profile', data),
+  register: (data) => api.post("/auth/register", data),
+  login: (data) => api.post("/auth/login", data),
+  getMe: () => api.get("/auth/me"),
+  updateProfile: (data) => api.put("/auth/profile", data),
 };
 
 export const courseAPI = {
-  getAll: (params) => api.get('/courses', { params }),
+  getAll: (params) => api.get("/courses", { params }),
   getOne: (id) => api.get(`/courses/${id}`),
-  create: (data) => api.post('/courses', data),
+  create: (data) => api.post("/courses", data),
   update: (id, data) => api.put(`/courses/${id}`, data),
   delete: (id) => api.delete(`/courses/${id}`),
-  getPopular: () => api.get('/courses/popular'),
-  getMyCourses: () => api.get('/courses/instructor/my-courses'),
+  getPopular: () => api.get("/courses/popular"),
+  getMyCourses: () => api.get("/courses/instructor/my-courses"),
 };
 
 export const categoryAPI = {
-  getAll: () => api.get('/categories'),
+  getAll: () => api.get("/categories"),
   getOne: (id) => api.get(`/categories/${id}`),
-  create: (data) => api.post('/categories', data),
+  create: (data) => api.post("/categories", data),
 };
 
 export const enrollmentAPI = {
-  enroll: (courseId) => api.post('/enrollments', { courseId }),
-  getMyEnrollments: () => api.get('/enrollments/my'),
+  enroll: (courseId) => api.post("/enrollments", { courseId }),
+  getMyEnrollments: () => api.get("/enrollments/my"),
   getOne: (id) => api.get(`/enrollments/${id}`),
-  updateProgress: (id, lessonId) => api.put(`/enrollments/${id}/progress`, { lessonId }),
-  getStats: () => api.get('/enrollments/stats'),
+  updateProgress: (id, lessonId) =>
+    api.put(`/enrollments/${id}/progress`, { lessonId }),
+  getStats: () => api.get("/enrollments/stats"),
 };
 
 export const lessonAPI = {

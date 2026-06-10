@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Online Learning Platform",
+    "name": "LearnHub",
     "slug": "online-learning-platform",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,7 +24,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4F46E5"
       },
-      "package": "com.onlinelearning.platform"
+      "package": "com.onlinelearning.platform",
+      "versionCode": 1,
+      "permissions": ["INTERNET"]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -33,6 +35,15 @@
     "plugins": [
       "expo-router",
       "expo-secure-store"
-    ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "92acff88-f2d0-4204-9729-dc8c842068a6"
+      }
+    }
   }
 }
