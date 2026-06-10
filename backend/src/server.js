@@ -48,13 +48,17 @@ app.get('/api/seed/:secret', async (req, res) => {
     const instructor2 = await User.create({ name: 'Jane Instructor', email: 'jane@example.com', password: 'password123', role: 'instructor', bio: 'Data Science Expert and ML practitioner' });
     await User.create({ name: 'Student User', email: 'student@example.com', password: 'password123', role: 'student' });
 
-    const categories = await Category.insertMany([
+    const catData = [
       { name: 'Web Development', description: 'Learn to build modern web applications', icon: 'code' },
       { name: 'Mobile Development', description: 'Build mobile apps for iOS and Android', icon: 'smartphone' },
       { name: 'Data Science', description: 'Learn data analysis and machine learning', icon: 'bar-chart' },
       { name: 'UI/UX Design', description: 'Design beautiful user interfaces', icon: 'palette' },
       { name: 'DevOps', description: 'Learn CI/CD, cloud, and infrastructure', icon: 'cloud' },
-    ]);
+    ];
+    const categories = [];
+    for (const c of catData) {
+      categories.push(await Category.create(c));
+    }
 
     const course1 = await Course.create({
       title: 'Complete Web Development Bootcamp',
