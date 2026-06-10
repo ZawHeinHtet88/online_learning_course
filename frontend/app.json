@@ -33,7 +33,7 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router",
+      "expo-router/plugin",
       "expo-secure-store"
     ],
     "experiments": {
